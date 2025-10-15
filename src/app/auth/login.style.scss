@@ -1,0 +1,25 @@
+:host { display: block; }
+.login-container {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+.card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--card-bg, #fff);
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+}
+h1 { margin: 0 0 1rem; font-size: 1.5rem; }
+.form-item { margin-bottom: 0.75rem; }
+.label { display: inline-block; margin: 0.5rem 0; }
+.error { color: #b91c1c; margin-top: 0.25rem; font-size: 0.9rem; }
+.success { color: #065f46; margin-top: 0.75rem; }
+.control { width: 100%; }
+input { width: 100%; padding: 0.5rem 0.6rem; border: 1px solid #d1d5db; border-radius: 8px; }
+input[aria-invalid="true"] { border-color: #b91c1c; }
+button.primary { width: 100%; margin-top: 0.75rem; padding: 0.5rem 0.6rem; border-radius: 8px; border: 1px solid #2563eb; background: #2563eb; color: #fff; }
