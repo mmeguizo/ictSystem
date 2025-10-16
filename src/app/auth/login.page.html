@@ -1,19 +1,13 @@
 <main class="login-container">
-  <section class="card" role="region" aria-labelledby="login-title">
+  <nz-card class="login-card" role="region" aria-labelledby="login-title">
     <h1 id="login-title">Sign in</h1>
 
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
-      <div class="form-item">
-        <label for="email" class="label">Email</label>
-        <div class="control">
-          <input
-            id="email"
-            type="email"
-            autocomplete="username"
-            formControlName="email"
-            [attr.aria-invalid]="emailInvalid"
-            [attr.aria-describedby]="emailInvalid ? 'email-error' : null"
-          />
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" nz-form novalidate>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" for="email">Email</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <input nz-input id="email" type="email" autocomplete="username" formControlName="email"
+            [attr.aria-invalid]="emailInvalid" [attr.aria-describedby]="emailInvalid ? 'email-error' : null" />
           @if (emailInvalid) {
             <div id="email-error" class="error">
               @if (form.controls.email.hasError('required')) { Please enter your email. }
@@ -21,35 +15,32 @@
               @if (form.controls.email.hasError('chmsuDomain')) { Email must be a @chmsu.edu.ph address. }
             </div>
           }
-        </div>
-      </div>
+        </nz-form-control>
+      </nz-form-item>
 
-      <div class="form-item">
-        <label for="password" class="label">Password</label>
-        <div class="control">
-          <input
-            id="password"
-            type="password"
-            autocomplete="current-password"
-            formControlName="password"
-            [attr.aria-invalid]="passwordInvalid"
-            [attr.aria-describedby]="passwordInvalid ? 'password-error' : null"
-          />
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" for="password">Password</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <input nz-input id="password" type="password" autocomplete="current-password" formControlName="password"
+            [attr.aria-invalid]="passwordInvalid" [attr.aria-describedby]="passwordInvalid ? 'password-error' : null" />
           @if (passwordInvalid) {
             <div id="password-error" class="error">Password is required (min 6 chars).</div>
           }
-        </div>
-      </div>
+        </nz-form-control>
+      </nz-form-item>
 
       @if (error()) {
-        <div class="error" role="alert">{{ error() }}</div>
+        <nz-alert nzType="error" [nzMessage]="error()" nzShowIcon></nz-alert>
       }
 
-      <button type="submit" class="primary" [disabled]="submitDisabled">{{ busy() ? 'Signing in…' : 'Sign in' }}</button>
-    </form>
+      <div class="actions">
+        <button nz-button nzType="primary" type="submit" [disabled]="submitDisabled">{{ busy() ? 'Signing in…' : 'Sign in' }}</button>
+        <button nz-button nzType="default" type="button" (click)="loginWithAuth0()">Sign in with Auth0</button>
+      </div>
 
-    @if (loggedIn()) {
-      <p class="success" role="status">Logged in (demo). You can now navigate.</p>
-    }
-  </section>
+      @if (loggedIn()) {
+        <nz-alert nzType="success" [nzMessage]="'Logged in (demo). You can now navigate.'" nzShowIcon></nz-alert>
+      }
+    </form>
+  </nz-card>
 </main>

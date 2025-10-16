@@ -1,10 +1,18 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
+  // default root -> login
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
+
   // Top-level login route: renders standalone page without the main layout (no sidebar)
   {
     path: 'login',
     loadComponent: () => import('./auth/login.page').then((m) => m.LoginPage),
+  },
+  // Auth0 callback route: process redirect and continue
+  {
+    path: 'callback',
+    loadComponent: () => import('./auth').then(m => m.AuthCallbackComponent),
   },
   // All other app pages live under the main layout shell
   {
