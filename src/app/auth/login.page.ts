@@ -1,6 +1,12 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Injector, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators, FormControl, FormGroup, AbstractControl, ValidationErrors } from '@angular/forms';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { Router } from '@angular/router';
+import { AuthService } from '@auth0/auth0-angular';
 
 type LoginForm = FormGroup<{
   email: FormControl<string>;
@@ -9,7 +15,7 @@ type LoginForm = FormGroup<{
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NzCardModule, NzFormModule, NzInputModule, NzButtonModule, NzAlertModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './login.page.html',
   styleUrls: ['./login.style.scss'],
@@ -17,6 +23,7 @@ type LoginForm = FormGroup<{
 export class LoginPage {
   private readonly fb = inject(FormBuilder).nonNullable;
   private readonly router = inject(Router);
+  private readonly injector = inject(Injector);
 
   // domain-specific validator: only allow emails ending with @chmsu.edu.ph
   private static chmsuDomainValidator(control: AbstractControl): ValidationErrors | null {
@@ -69,5 +76,13 @@ export class LoginPage {
       }
       this.busy.set(false);
     }, 600);
+  }
+
+  // Start Auth0 login redirect flow
+  loginWithAuth0(): void {
+    // Resolve AuthService only in the browser to avoid SSR DI/initialization
+    if (typeof window === 'undefined') return;
+    const auth = this.injector.get(AuthService, null);
+    auth?.loginWithRedirect();
   }
 }
