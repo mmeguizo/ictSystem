@@ -70,7 +70,7 @@ export class LoginPage {
       if (email.includes('@')) {
         this.loggedIn.set(true);
         // Optionally navigate somewhere: keep commented for clarity/debugging
-        this.router.navigateByUrl('/welcome');
+       this.router.navigateByUrl('/welcome');
       } else {
         this.error.set('Invalid credentials (demo).');
       }

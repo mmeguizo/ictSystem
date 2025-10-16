@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authRequired, redirectIfAuthenticated } from './auth/auth.guards';
 
 export const routes: Routes = [
   // default root -> login
@@ -8,6 +9,7 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () => import('./auth/login.page').then((m) => m.LoginPage),
+    canMatch: [redirectIfAuthenticated],
   },
   // Auth0 callback route: process redirect and continue
   {
@@ -18,6 +20,7 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./layout/main-layout').then(m => m.MainLayout),
+    canMatch: [authRequired],
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'welcome' },
       { path: 'welcome', loadChildren: () => import('./pages/welcome/welcome.routes').then(m => m.WELCOME_ROUTES) },

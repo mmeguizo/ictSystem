@@ -1,5 +1,8 @@
 <main class="login-container">
   <nz-card class="login-card" role="region" aria-labelledby="login-title">
+    <div class="login-logo">
+      <img src="/assets/chmsu-logo.png" id="chmsu-logo" alt="CHMSU logo" />
+    </div>
     <h1 id="login-title">Sign in</h1>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" nz-form novalidate>
@@ -35,6 +38,7 @@
 
       <div class="actions">
         <button nz-button nzType="primary" type="submit" [disabled]="submitDisabled">{{ busy() ? 'Signing in…' : 'Sign in' }}</button>
+        &nbsp;
         <button nz-button nzType="default" type="button" (click)="loginWithAuth0()">Sign in with Auth0</button>
       </div>
 
