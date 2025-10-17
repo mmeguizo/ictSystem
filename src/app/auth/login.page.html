@@ -1,6 +1,10 @@
 <main class="login-container">
   <nz-card class="login-card" role="region" aria-labelledby="login-title">
-    <h1 id="login-title">Sign in</h1>
+    <div class="login-logo">
+      <img ngSrc="/assets/chmsu-logo.png" width="120" height="120" id="chmsu-logo" alt="CHMSU logo" />
+    </div>
+  <h1 id="login-title">ICT TICKET</h1>
+  <p class="subtitle center-text" nz-typography nzType="secondary">Enter your CHMSU credentials to access the system.</p>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" nz-form novalidate>
       <nz-form-item>
@@ -19,7 +23,9 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSpan]="24" for="password">Password</nz-form-label>
+        <nz-form-label [nzSpan]="24" for="password">Password
+          <!-- <a class="forgot" href="#" (click)="$event.preventDefault()">Forgot password?</a> -->
+        </nz-form-label>
         <nz-form-control [nzSpan]="24">
           <input nz-input id="password" type="password" autocomplete="current-password" formControlName="password"
             [attr.aria-invalid]="passwordInvalid" [attr.aria-describedby]="passwordInvalid ? 'password-error' : null" />
@@ -29,18 +35,24 @@
         </nz-form-control>
       </nz-form-item>
 
-      @if (error()) {
-        <nz-alert nzType="error" [nzMessage]="error()" nzShowIcon></nz-alert>
-      }
+      @if (error()) { <nz-alert nzType="error" [nzMessage]="error()" nzShowIcon></nz-alert> }
 
       <div class="actions">
-        <button nz-button nzType="primary" type="submit" [disabled]="submitDisabled">{{ busy() ? 'Signing in…' : 'Sign in' }}</button>
-        <button nz-button nzType="default" type="button" (click)="loginWithAuth0()">Sign in with Auth0</button>
+        <button class="normal-button" nz-button nzType="primary" type="submit" [disabled]="submitDisabled">
+          {{ busy() ? 'Signing in…' : 'Sign in' }}
+        </button>
       </div>
 
-      @if (loggedIn()) {
-        <nz-alert nzType="success" [nzMessage]="'Logged in (demo). You can now navigate.'" nzShowIcon></nz-alert>
-      }
+      <nz-divider>or</nz-divider>
+
+      <div class="actions">
+        <button nz-button nzType="default" class="sso-button" type="button" [disabled]="busy() || ssoBusy()" (click)="loginWithAuth0()">
+          {{ ssoBusy() ? 'Redirecting…' : 'Sign in with CHMSU SSO' }}
+        </button>
+        <p class="sso-note">SSO powered by Auth0 (Google)</p>
+      </div>
+
+      @if (loggedIn()) { <nz-alert nzType="success" [nzMessage]="'Logged in (demo). You can now navigate.'" nzShowIcon></nz-alert> }
     </form>
   </nz-card>
 </main>

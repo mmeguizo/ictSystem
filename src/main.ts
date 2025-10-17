@@ -13,8 +13,10 @@ bootstrapApplication(App, {
       authorizationParams: {
         redirect_uri: window.location.origin + '/callback',
         audience: 'https://ictsystem.api',
-        scope: 'openid profile email'
-      }
+        scope: 'openid profile email offline_access'
+      },
+      useRefreshTokens: true,
+      cacheLocation: 'localstorage'
     })
   ]
 })
