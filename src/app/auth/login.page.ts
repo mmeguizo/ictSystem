@@ -4,10 +4,15 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { NgOptimizedImage } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-
 type LoginForm = FormGroup<{
   email: FormControl<string>;
   password: FormControl<string>;
@@ -15,7 +20,7 @@ type LoginForm = FormGroup<{
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, NzCardModule, NzFormModule, NzInputModule, NzButtonModule, NzAlertModule],
+  imports: [ReactiveFormsModule, NzCardModule, NzFormModule, NzInputModule, NzButtonModule, NzAlertModule, NzDividerModule, NzSpinModule, NzIconModule, NzGridModule, NzTypographyModule, NgOptimizedImage],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './login.page.html',
   styleUrls: ['./login.style.scss'],
@@ -39,6 +44,7 @@ export class LoginPage {
   });
 
   readonly busy = signal(false);
+  readonly ssoBusy = signal(false);
   readonly error = signal<string | null>(null);
   readonly loggedIn = signal(false);
 
@@ -53,7 +59,7 @@ export class LoginPage {
   }
 
   get submitDisabled(): boolean {
-    return this.busy() || this.form.invalid;
+    return this.busy() || this.ssoBusy() || this.form.invalid;
   }
 
   onSubmit(): void {
@@ -82,6 +88,7 @@ export class LoginPage {
   loginWithAuth0(): void {
     // Resolve AuthService only in the browser to avoid SSR DI/initialization
     if (typeof window === 'undefined') return;
+    this.ssoBusy.set(true);
     const auth = this.injector.get(AuthService, null);
     auth?.loginWithRedirect();
   }
