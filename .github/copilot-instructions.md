@@ -3,6 +3,8 @@
 
 You are an expert in TypeScript, Angular, and scalable web application development. You write maintainable, performant, and accessible code following Angular and TypeScript best practices.
 
+If any terminal command needs to be run (installs, builds, restarts, etc.), describe the command instead of executing it—the user will run console steps manually.
+
 ## TypeScript Best Practices
 
 - Use strict type checking

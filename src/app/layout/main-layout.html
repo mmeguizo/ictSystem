@@ -41,6 +41,11 @@
         <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
           <nz-icon class="trigger" [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" />
         </span>
+        <div class="header-right">
+          <button nz-button nzType="text" (click)="openProfile()">
+            <nz-avatar [nzSrc]="avatarUrl() || '/assets/no-photo.png'" nzSize="large"></nz-avatar>
+          </button>
+        </div>
       </div>
     </nz-header>
     <nz-content>
@@ -50,3 +55,40 @@
     </nz-content>
   </nz-layout>
 </nz-layout>
+
+<!-- Profile modal -->
+<nz-modal [nzVisible]="isProfileOpen()" (nzVisibleChange)="isProfileOpen.set($event)" nzTitle="Profile" (nzOnCancel)="closeProfile()" (nzOnOk)="saveProfile()">
+  <ng-container *nzModalContent>
+    <form [formGroup]="profileForm" nz-form nzLayout="vertical">
+      <nz-form-item>
+        <nz-form-label>Avatar</nz-form-label>
+        <nz-form-control>
+          <div class="avatar-row">
+            <nz-avatar [nzSrc]="avatarUrl() || '/assets/no-photo.png'" nzSize="large"></nz-avatar>
+            <nz-upload nzListType="picture-card" [nzShowUploadList]="false" [nzBeforeUpload]="beforeUpload.bind(this)">
+              <button nz-button nzType="default" type="button">Upload</button>
+            </nz-upload>
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label>Display name</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="displayName" placeholder="Your name" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label>New password</nz-form-label>
+        <nz-form-control>
+          <input nz-input type="password" formControlName="password" placeholder="••••••" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label>Confirm password</nz-form-label>
+        <nz-form-control>
+          <input nz-input type="password" formControlName="confirm" placeholder="••••••" />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>

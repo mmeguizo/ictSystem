@@ -17,7 +17,7 @@ bootstrapApplication(App, {
       },
       useRefreshTokens: true,
       cacheLocation: 'localstorage'
-    })
+    }),
   ]
 })
   .catch((err) => console.error(err));
